@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ank Jyotish - Course Videos</title>
+    <style>
+        :root {
+            --shadowed-green: #1C2529;
+            --mint-green: #A1D1B1;
+            --light-mint: #E8F5E9;
+            --gold: #D4AF37;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--shadowed-green);
+            color: var(--light-mint);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: rgba(28, 37, 41, 0.95);
+            padding: 1.5rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--mint-green);
+            letter-spacing: 1px;
+        }
+
+        .back-btn {
+            background-color: var(--mint-green);
+            color: var(--shadowed-green);
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: var(--light-mint);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(161, 209, 177, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--mint-green);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-title p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            color: var(--light-mint);
+        }
+
+        /* Content Button Styles */
+        .content-button-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .content-btn {
+            background: linear-gradient(135deg, var(--mint-green), var(--gold));
+            color: var(--shadowed-green);
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(161, 209, 177, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(161, 209, 177, 0.4);
+            background: linear-gradient(135deg, var(--gold), var(--mint-green));
+        }
+
+        /* Password Modal Styles */
+        .password-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .password-modal-content {
+            background-color: var(--shadowed-green);
+            margin: 15% auto;
+            padding: 2.5rem;
+            border: 2px solid var(--mint-green);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .password-modal h2 {
+            color: var(--mint-green);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 2px solid var(--mint-green);
+            border-radius: 8px;
+            background-color: rgba(161, 209, 177, 0.1);
+            color: var(--light-mint);
+            font-size: 1.1rem;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .password-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .password-btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 100px;
+        }
+
+        .submit-btn {
+            background-color: var(--mint-green);
+            color: var(--shadowed-green);
+        }
+
+        .cancel-btn {
+            background-color: rgba(161, 209, 177, 0.2);
+            color: var(--light-mint);
+            border: 2px solid var(--mint-green);
+        }
+
+        .submit-btn:hover, .cancel-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Hidden content styles */
+        .hidden-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .course-section {
+            margin: 3rem 0;
+            background-color: rgba(161, 209, 177, 0.08);
+            border: 1px solid rgba(161, 209, 177, 0.2);
+            border-radius: 15px;
+            padding: 2.5rem;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--mint-green);
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .section-header p {
+            opacity: 0.8;
+            color: var(--light-mint);
+            font-size: 1.1rem;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .video-card {
+            background-color: rgba(161, 209, 177, 0.1);
+            border: 1px solid rgba(161, 209, 177, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(161, 209, 177, 0.2);
+            border-color: var(--mint-green);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--shadowed-green) 0%, rgba(161, 209, 177, 0.2) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .video-thumbnail:hover {
+            background: linear-gradient(135deg, rgba(161, 209, 177, 0.2) 0%, var(--shadowed-green) 100%);
+        }
+
+        .video-thumbnail img {
+            transition: var(--transition);
+        }
+
+        .video-thumbnail:hover img {
+            transform: scale(1.05);
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(161, 209, 177, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+        }
+
+        .video-thumbnail:hover .play-overlay {
+            background: var(--light-mint);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .play-overlay::after {
+            content: '▶';
+            color: var(--shadowed-green);
+            font-size: 1.5rem;
+            margin-left: 3px;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--mint-green);
+        }
+
+        .video-description {
+            font-size: 0.95rem;
+            color: var(--light-mint);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--mint-green);
+            opacity: 0.8;
+        }
+
+        .youtube-link {
+            display: inline-block;
+            background: var(--mint-green);
+            color: var(--shadowed-green);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .youtube-link:hover {
+            background: var(--light-mint);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(161, 209, 177, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 80px 15px 20px;
+            }
+            
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .page-title h1 {
+                font-size: 2rem;
+            }
+            
+            .course-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-container" style="display: flex; align-items: center; gap: 10px;">
+                <img src="Ankjyotish logo.jpg" alt="AnkJyōtish Logo" style="height: 40px; width: auto;" />
+                <div class="logo">AnkJyōtish</div>
+            </div>
+            <a href="index.html" class="back-btn">← Back to Home</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <h1>Course Video Library</h1>
+            <p>Learn Ank Jyotish with our comprehensive video courses</p>
+        </div>
+
+        <!-- Content Button -->
+        <div class="content-button-container">
+            <button class="content-btn" onclick="openPasswordModal()">
+                🔓 Access Course Content
+            </button>
+        </div>
+
+        <!-- Password Modal -->
+        <div id="passwordModal" class="password-modal">
+            <div class="password-modal-content">
+                <h2>🔐 Enter Password</h2>
+                <p style="margin-bottom: 1rem; opacity: 0.8;">Please enter the password to access course content</p>
+                <input type="password" id="passwordInput" class="password-input" placeholder="Enter password..." maxlength="20">
+                <div class="password-buttons">
+                    <button class="password-btn submit-btn" onclick="checkPassword()">Submit</button>
+                    <button class="password-btn cancel-btn" onclick="closePasswordModal()">Cancel</button>
+                </div>
+                <p id="passwordError" style="color: #ff6b6b; margin-top: 1rem; display: none;">Incorrect password. Please try again.</p>
+            </div>
+        </div>
+
+        <!-- Hidden Content (Course Videos) -->
+        <div id="hiddenContent" class="hidden-content">
+            <!-- Basic Course Section -->
+            <div class="course-section">
+                <div class="section-header">
+                    <h2>Basic Course Videos</h2>
+                    <p>Start your journey with fundamental concepts of Ank Jyotish</p>
+                </div>
+                <div class="video-grid" id="basicVideos">
+                    <!-- Basic course videos will be populated here -->
+                </div>
+            </div>
+
+            <!-- Advanced Course Section -->
+            <div class="course-section">
+                <div class="section-header">
+                    <h2>Advanced Course Videos</h2>
+                    <p>Deep dive into advanced techniques and practical applications</p>
+                </div>
+                <div class="video-grid" id="advancedVideos">
+                    <!-- Advanced course videos will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // YouTube video data using the specified color scheme
+        const basicCourseVideos = [
+            {
+                title: "Introduction to Ank Jyotish - Part 1",
+                description: "Learn the fundamental concepts of numerology and its significance in Vedic astrology.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example1",
+                duration: "15:30"
+            },
+            {
+                title: "Basic Number Meanings 1-9",
+                description: "Understanding the core meanings of numbers 1 through 9 in Ank Jyotish.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example2",
+                duration: "22:15"
+            },
+            {
+                title: "Life Path Number Calculation",
+                description: "Step-by-step guide to calculate and interpret your life path number.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example3",
+                duration: "18:45"
+            },
+            {
+                title: "Basic Compatibility Analysis",
+                description: "Learn how to analyze compatibility using basic numerology principles.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example7",
+                duration: "20:00"
+            },
+            {
+                title: "Numerology and Daily Life",
+                description: "Discover how numerology influences your daily decisions and lifestyle.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example8",
+                duration: "19:30"
+            }
+        ];
+
+        const advancedCourseVideos = [
+            {
+                title: "Advanced Numerology Predictions",
+                description: "Master the art of making accurate predictions using advanced numerology techniques.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example4",
+                duration: "25:20"
+            },
+            {
+                title: "Karmic Debt Numbers Explained",
+                description: "Deep dive into karmic debt numbers and their impact on life patterns.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example5",
+                duration: "30:10"
+            },
+            {
+                title: "Business Name Numerology",
+                description: "Learn how to choose auspicious business names using numerology principles.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example6",
+                duration: "28:35"
+            },
+            {
+                title: "Master Number 11, 22, 33 Deep Dive",
+                description: "Explore the powerful master numbers and their spiritual significance in numerology.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example7",
+                duration: "32:15"
+            },
+            {
+                title: "Advanced Compatibility Analysis",
+                description: "Learn sophisticated techniques for analyzing relationship compatibility using numerology.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example8",
+                duration: "27:40"
+            },
+            {
+                title: "Career Path Numerology",
+                description: "Discover how to guide career choices using advanced numerology calculations.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example9",
+                duration: "26:50"
+            },
+            {
+                title: "Health and Wellness Numerology",
+                description: "Understand how numbers influence health patterns and wellness practices.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example10",
+                duration: "29:20"
+            },
+            {
+                title: "Financial Numerology Mastery",
+                description: "Learn advanced techniques for financial planning using numerology principles.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example11",
+                duration: "31:05"
+            },
+            {
+                title: "Spiritual Numerology Practices",
+                description: "Deep spiritual insights through advanced numerology meditation and practices.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example12",
+                duration: "28:45"
+            },
+            {
+                title: "Advanced Name Correction Techniques",
+                description: "Master the art of name correction for life improvement using numerology.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example13",
+                duration: "33:10"
+            },
+            {
+                title: "Past Life Numerology",
+                description: "Explore past life connections and karmic patterns through numerology analysis.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example14",
+                duration: "30:25"
+            },
+            {
+                title: "Advanced Timing Techniques",
+                description: "Learn precise timing methods for important life decisions using numerology.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example15",
+                duration: "27:15"
+            },
+            {
+                title: "Professional Consultation Skills",
+                description: "Develop expertise in conducting professional numerology consultations.",
+                youtubeUrl: "https://www.youtube.com/watch?v=example16",
+                duration: "35:00"
+            }
+        ];
+
+        // Function to extract YouTube video ID from URL
+        function getYouTubeVideoId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        // Function to create video card HTML with YouTube thumbnail
+        function createVideoCard(video) {
+            const videoId = getYouTubeVideoId(video.youtubeUrl);
+            const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
+            
+            return `
+                <div class="video-card">
+                    <div class="video-thumbnail" onclick="openYouTubeVideo('${video.youtubeUrl}')">
+                        ${videoId ? 
+                            `<img src="${thumbnailUrl}" alt="${video.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                             <div class="play-overlay"></div>` 
+                            : 
+                            `<div class="play-overlay"></div>`
+                        }
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">${video.title}</h3>
+                        <p class="video-description">${video.description}</p>
+                        <div class="video-meta">
+                            <span>Duration: ${video.duration}</span>
+                            <a href="${video.youtubeUrl}" class="youtube-link" target="_blank">Watch on YouTube</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Password functionality
+        const CORRECT_PASSWORD = "ankjyotish123";
+
+        function openPasswordModal() {
+            document.getElementById('passwordModal').style.display = 'block';
+            document.getElementById('passwordInput').focus();
+            document.getElementById('passwordError').style.display = 'none';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordError').style.display = 'none';
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            if (input === CORRECT_PASSWORD) {
+                closePasswordModal();
+                showContent();
+            } else {
+                document.getElementById('passwordError').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        function showContent() {
+            document.getElementById('hiddenContent').style.display = 'block';
+            document.querySelector('.content-button-container').style.display = 'none';
+            renderVideos();
+        }
+
+        // Allow Enter key to submit password
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('passwordModal');
+            if (event.target === modal) {
+                closePasswordModal();
+            }
+        }
+
+        // Function to open YouTube video
+        function openYouTubeVideo(url) {
+            window.open(url, '_blank');
+        }
+
+        // Function to render videos
+        function renderVideos() {
+            try {
+                const basicContainer = document.getElementById('basicVideos');
+                const advancedContainer = document.getElementById('advancedVideos');
+
+                if (!basicContainer || !advancedContainer) {
+                    console.error('Container elements not found');
+                    return;
+                }
+
+                basicContainer.innerHTML = basicCourseVideos.map(video => createVideoCard(video)).join('');
+                advancedContainer.innerHTML = advancedCourseVideos.map(video => createVideoCard(video)).join('');
+            } catch (error) {
+                console.error('Error rendering videos:', error);
+            }
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Content is hidden by default, will be shown after password verification
+        });
+    </script>
+</body>
+</html>

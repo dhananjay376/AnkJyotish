@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Content Upload - AnkJyōtish</title>
+    <style>
+        :root {
+            --dark-green: #1C2529;
+            --mint-green: #A1D1B1;
+            --light-mint: #E8F5E9;
+            --gold: #D4AF37;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-green);
+            color: var(--light-mint);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: rgba(28, 37, 41, 0.9);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo-container img {
+            height: 50px;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--mint-green);
+            letter-spacing: 2px;
+        }
+        
+        .upload-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 2rem;
+        }
+        
+        .upload-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .upload-header h1 {
+            font-size: 2.5rem;
+            color: var(--mint-green);
+            margin-bottom: 1rem;
+        }
+        
+        .upload-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .upload-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .upload-card {
+            background-color: rgba(161, 209, 177, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .upload-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .upload-card h3 {
+            font-size: 1.5rem;
+            color: var(--mint-green);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .upload-card p {
+            margin-bottom: 1.5rem;
+            color: var(--light-mint);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--mint-green);
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid rgba(161, 209, 177, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--light-mint);
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--mint-green);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .file-upload-area {
+            border: 2px dashed var(--mint-green);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .file-upload-area:hover {
+            background-color: rgba(161, 209, 177, 0.1);
+            border-color: var(--gold);
+        }
+        
+        .file-upload-area.dragover {
+            background-color: rgba(161, 209, 177, 0.2);
+            border-color: var(--gold);
+        }
+        
+        .file-upload-area input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .upload-btn {
+            display: inline-block;
+            background-color: var(--mint-green);
+            color: var(--dark-green);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        .upload-btn:hover {
+            background-color: transparent;
+            color: var(--mint-green);
+            border-color: var(--mint-green);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(161, 209, 177, 0.2);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--mint-green);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .file-list {
+            margin-top: 1rem;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            background-color: rgba(161, 209, 177, 0.1);
+            border-radius: 5px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .file-item button {
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            background-color: var(--gold);
+            color: var(--dark-green);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-top: 2rem;
+        }
+        
+        .back-btn:hover {
+            background-color: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+        }
+        
+        .success-message {
+            background-color: rgba(161, 209, 177, 0.2);
+            color: var(--mint-green);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            display: none;
+        }
+        
+        .error-message {
+            background-color: rgba(255, 71, 87, 0.2);
+            color: #ff4757;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="Ankjyotish logo.jpg" alt="AnkJyōtish Logo" />
+            <div class="logo-text">Course Upload Portal</div>
+        </div>
+        <a href="admin.html" class="back-btn">← Back to Admin</a>
+    </header>
+
+    <div class="upload-container">
+        <div class="upload-header">
+            <h1>Course Content Upload</h1>
+            <p>Upload and manage your course photos, videos, and materials</p>
+        </div>
+
+        <div class="upload-grid">
+            <!-- Photo Upload Section -->
+            <div class="upload-card">
+                <h3>📸 Upload Photos</h3>
+                <p>Upload course images, thumbnails, and promotional materials</p>
+                
+                <div class="form-group">
+                    <label>Photo Title</label>
+                    <input type="text" id="photoTitle" placeholder="Enter photo title">
+                </div>
+                
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="photoDescription" rows="3" placeholder="Enter photo description"></textarea>
+                </div>
+                
+                <div class="file-upload-area" id="photoUploadArea">
+                    <input type="file" id="photoInput" accept="image/*" multiple>
+                    <p>📁 Drag & drop photos here or click to browse</p>
+                    <p style="font-size: 0.9em; opacity: 0.7;">Supported: JPG, PNG, GIF, WebP</p>
+                </div>
+                
+                <div class="file-list" id="photoFileList"></div>
+                
+                <div class="progress-bar" id="photoProgress" style="display: none;">
+                    <div class="progress-fill" id="photoProgressFill"></div>
+                </div>
+                
+                <button class="upload-btn" onclick="uploadPhotos()">Upload Photos</button>
+            </div>
+
+            <!-- Video Upload Section -->
+            <div class="upload-card">
+                <h3>🎥 Upload Videos</h3>
+                <p>Upload course videos, tutorials, and recorded sessions</p>
+                
+                <div class="form-group">
+                    <label>Video Title</label>
+                    <input type="text" id="videoTitle" placeholder="Enter video title">
+                </div>
+                
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="videoDescription" rows="3" placeholder="Enter video description"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Video Category</label>
+                    <select id="videoCategory">
+                        <option value="">Select category</option>
+                        <option value="beginner">Beginner Level</option>
+                        <option value="intermediate">Intermediate Level</option>
+                        <option value="advanced">Advanced Level</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="live-session">Live Session</option>
+                    </select>
+                </div>
+                
+                <div class="file-upload-area" id="videoUploadArea">
+                    <input type="file" id="videoInput" accept="video/*">
+                    <p>📁 Drag & drop videos here or click to browse</p>
+                    <p style="font-size: 0.9em; opacity: 0.7;">Supported: MP4, AVI, MOV, MKV (Max: 500MB)</p>
+                </div>
+                
+                <div class="file-list" id="videoFileList"></div>
+                
+                <div class="progress-bar" id="videoProgress" style="display: none;">
+                    <div class="progress-fill" id="videoProgressFill"></div>
+                </div>
+                
+                <button class="upload-btn" onclick="uploadVideos()">Upload Video</button>
+            </div>
+
+            <!-- Materials Upload Section -->
+            <div class="upload-card">
+                <h3>📚 Upload Materials</h3>
+                <p>Upload PDFs, documents, worksheets, and course materials</p>
+                
+                <div class="form-group">
+                    <label>Material Title</label>
+                    <input type="text" id="materialTitle" placeholder="Enter material title">
+                </div>
+                
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="materialDescription" rows="3" placeholder="Enter material description"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Material Type</label>
+                    <select id="materialType">
+                        <option value="">Select type</option>
+                        <option value="pdf">PDF Document</option>
+                        <option value="worksheet">Worksheet</option>
+                        <option value="guide">Study Guide</option>
+                        <option value="cheatsheet">Cheat Sheet</option>
+                        <option value="template">Template</option>
+                    </select>
+                </div>
+                
+                <div class="file-upload-area" id="materialUploadArea">
+                    <input type="file" id="materialInput" accept=".pdf,.doc,.docx,.txt,.xls,.xlsx" multiple>
+                    <p>📁 Drag & drop materials here or click to browse</p>
+                    <p style="font-size: 0.9em; opacity: 0.7;">Supported: PDF, DOC, DOCX, TXT, XLS, XLSX</p>
+                </div>
+                
+                <div class="file-list" id="materialFileList"></div>
+                
+                <div class="progress-bar" id="materialProgress" style="display: none;">
+                    <div class="progress-fill" id="materialProgressFill"></div>
+                </div>
+                
+                <button class="upload-btn" onclick="uploadMaterials()">Upload Materials</button>
+            </div>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            ✅ Files uploaded successfully!
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            ❌ Error uploading files. Please try again.
+        </div>
+    </div>
+
+    <script>
+        // File upload functionality
+        let selectedFiles = {
+            photos: [],
+            videos: [],
+            materials: []
+        };
+
+        // Photo upload handlers
+        document.getElementById('photoInput').addEventListener('change', handlePhotoSelect);
+        document.getElementById('photoUploadArea').addEventListener('click', () => document.getElementById('photoInput').click());
+        
+        // Video upload handlers
+        document.getElementById('videoInput').addEventListener('change', handleVideoSelect);
+        document.getElementById('videoUploadArea').addEventListener('click', () => document.getElementById('videoInput').click());
+        
+        // Material upload handlers
+        document.getElementById('materialInput').addEventListener('change', handleMaterialSelect);
+        document.getElementById('materialUploadArea').addEventListener('click', () => document.getElementById('materialInput').click());
+
+        // Drag and drop functionality
+        setupDragAndDrop('photoUploadArea', 'photoInput');
+        setupDragAndDrop('videoUploadArea', 'videoInput');
+        setupDragAndDrop('materialUploadArea', 'materialInput');
+
+        function setupDragAndDrop(areaId, inputId) {
+            const area = document.getElementById(areaId);
+            const input = document.getElementById(inputId);
+
+            area.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                area.classList.add('dragover');
+            });
+
+            area.addEventListener('dragleave', () => {
+                area.classList.remove('dragover');
+            });
+
+            area.addEventListener('drop', (e) => {
+                e.preventDefault();
+                area.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                input.files = files;
+                
+                if (inputId === 'photoInput') handlePhotoSelect({ target: { files } });
+                if (inputId === 'videoInput') handleVideoSelect({ target: { files } });
+                if (inputId === 'materialInput') handleMaterialSelect({ target: { files } });
+            });
+        }
+
+        function handlePhotoSelect(event) {
+            const files = Array.from(event.target.files);
+            selectedFiles.photos = files;
+            displayFileList('photoFileList', files);
+        }
+
+        function handleVideoSelect(event) {
+            const files = Array.from(event.target.files);
+            selectedFiles.videos = files;
+            displayFileList('videoFileList', files);
+        }
+
+        function handleMaterialSelect(event) {
+            const files = Array.from(event.target.files);
+            selectedFiles.materials = files;
+            displayFileList('materialFileList', files);
+        }
+
+        function displayFileList(containerId, files) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            files.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <span>${file.name} (${formatFileSize(file.size)})</span>
+                    <button onclick="removeFile('${containerId}', ${index})">Remove</button>
+                `;
+                container.appendChild(fileItem);
+            });
+        }
+
+        function removeFile(containerId, index) {
+            if (containerId === 'photoFileList') {
+                selectedFiles.photos.splice(index, 1);
+                displayFileList('photoFileList', selectedFiles.photos);
+            } else if (containerId === 'videoFileList') {
+                selectedFiles.videos.splice(index, 1);
+                displayFileList('videoFileList', selectedFiles.videos);
+            } else if (containerId === 'materialFileList') {
+                selectedFiles.materials.splice(index, 1);
+                displayFileList('materialFileList', selectedFiles.materials);
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function uploadPhotos() {
+            const title = document.getElementById('photoTitle').value;
+            const description = document.getElementById('photoDescription').value;
+            
+            if (!title || selectedFiles.photos.length === 0) {
+                showError('Please provide a title and select at least one photo');
+                return;
+            }
+
+            simulateUpload('photoProgress', 'photoProgressFill', 'Photo');
+        }
+
+        function uploadVideos() {
+            const title = document.getElementById('videoTitle').value;
+            const description = document.getElementById('videoDescription').value;
+            const category = document.getElementById('videoCategory').value;
+            
+            if (!title || !category || selectedFiles.videos.length === 0) {
+                showError('Please provide all required fields and select a video');
+                return;
+            }
+
+            simulateUpload('videoProgress', 'videoProgressFill', 'Video');
+        }
+
+        function uploadMaterials() {
+            const title = document.getElementById('materialTitle').value;
+            const description = document.getElementById('materialDescription').value;
+            const type = document.getElementById('materialType').value;
+            
+            if (!title || !type || selectedFiles.materials.length === 0) {
+                showError('Please provide all required fields and select at least one material');
+                return;
+            }
+
+            simulateUpload('materialProgress', 'materialProgressFill', 'Material');
+        }
+
+        function simulateUpload(progressId, fillId, type) {
+            const progressBar = document.getElementById(progressId);
+            const progressFill = document.getElementById(fillId);
+            
+            progressBar.style.display = 'block';
+            let progress = 0;
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress > 100) progress = 100;
+                
+                progressFill.style.width = progress + '%';
+                
+                if (progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        progressBar.style.display = 'none';
+                        progressFill.style.width = '0%';
+                        showSuccess(`${type} uploaded successfully!`);
+                        resetForm(type.toLowerCase());
+                    }, 500);
+                }
+            }, 200);
+        }
+
+        function showSuccess(message) {
+            const successMsg = document.getElementById('successMessage');
+            successMsg.textContent = message;
+            successMsg.style.display = 'block';
+            setTimeout(() => successMsg.style.display = 'none', 3000);
+        }
+
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMessage');
+            errorMsg.textContent = message;
+            errorMsg.style.display = 'block';
+            setTimeout(() => errorMsg.style.display = 'none', 3000);
+        }
+
+        function resetForm(type) {
+            if (type === 'photo') {
+                document.getElementById('photoTitle').value = '';
+                document.getElementById('photoDescription').value = '';
+                selectedFiles.photos = [];
+                displayFileList('photoFileList', []);
+            } else if (type === 'video') {
+                document.getElementById('videoTitle').value = '';
+                document.getElementById('videoDescription').value = '';
+                document.getElementById('videoCategory').value = '';
+                selectedFiles.videos = [];
+                displayFileList('videoFileList', []);
+            } else if (type === 'material') {
+                document.getElementById('materialTitle').value = '';
+                document.getElementById('materialDescription').value = '';
+                document.getElementById('materialType').value = '';
+                selectedFiles.materials = [];
+                displayFileList('materialFileList', []);
+            }
+        }
+    </script>
+</body>
+</html>

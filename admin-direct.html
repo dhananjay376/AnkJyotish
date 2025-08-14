@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnkJyōtish - Admin Portal (Direct Access)</title>
+    <style>
+        :root {
+            --dark-green: #1C2529;
+            --mint-green: #A1D1B1;
+            --light-mint: #E8F5E9;
+            --gold: #D4AF37;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-green);
+            color: var(--light-mint);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: rgba(28, 37, 41, 0.9);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo-container img {
+            height: 50px;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--mint-green);
+            letter-spacing: 2px;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 2rem;
+        }
+        
+        .admin-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .admin-header h1 {
+            font-size: 2.5rem;
+            color: var(--mint-green);
+            margin-bottom: 1rem;
+        }
+        
+        .admin-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .admin-card {
+            background-color: rgba(161, 209, 177, 0.1);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .admin-card h3 {
+            font-size: 1.5rem;
+            color: var(--mint-green);
+            margin-bottom: 1rem;
+        }
+        
+        .admin-btn {
+            display: inline-block;
+            background-color: var(--mint-green);
+            color: var(--dark-green);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        
+        .admin-btn:hover {
+            background-color: transparent;
+            color: var(--mint-green);
+            border-color: var(--mint-green);
+        }
+        
+        .back-btn {
+            display: inline-block;
+            background-color: var(--gold);
+            color: var(--dark-green);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-top: 2rem;
+        }
+        
+        .back-btn:hover {
+            background-color: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="Ankjyotish logo.jpg" alt="AnkJyōtish Logo" />
+            <div class="logo-text">AnkJyōtish Admin Portal</div>
+        </div>
+        <a href="index.html" class="back-btn">← Back to Main Site</a>
+    </header>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Admin Dashboard</h1>
+            <p>Manage your numerology services and content</p>
+        </div>
+
+        <div class="admin-panel">
+            <div class="admin-card">
+                <h3>📁 Course Management</h3>
+                <p>Upload and manage course content, videos, and materials</p>
+                <button class="admin-btn" onclick="window.location.href='course-upload.html'">Manage Courses</button>
+            </div>
+
+            <div class="admin-card">
+                <h3>📊 Analytics</h3>
+                <p>View detailed analytics and student progress reports</p>
+                <button class="admin-btn" onclick="showAnalytics()">View Analytics</button>
+            </div>
+
+            <div class="admin-card">
+                <h3>👥 Student Management</h3>
+                <p>Manage student enrollments and track progress</p>
+                <button class="admin-btn" onclick="showStudents()">Manage Students</button>
+            </div>
+
+            <div class="admin-card">
+                <h3>💰 Payment Management</h3>
+                <p>View and manage payment records and transactions</p>
+                <button class="admin-btn" onclick="showPayments()">View Payments</button>
+            </div>
+
+            <div class="admin-card">
+                <h3>📧 Email Campaigns</h3>
+                <p>Email Campaigns</p>
+                <button class="admin-btn" onclick="showEmails()">View Emails</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showAnalytics() {
+            alert('Analytics feature coming soon!');
+        }
+
+        function showStudents() {
+            alert('Student management feature coming soon!');
+        }
+
+        function showPayments() {
+            alert('Payment management feature coming soon!');
+        }
+
+        function showEmails() {
+            alert('Email campaigns feature coming soon!');
+        }
+    </script>
+</body>
+</html>
