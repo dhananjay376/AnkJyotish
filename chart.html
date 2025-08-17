@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Numerology Chart - AnkJyōtish</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    .chart-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .date-selector {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    
+    .date-selector h2 {
+      color: var(--mint-green);
+      margin-bottom: 20px;
+    }
+    
+    .date-input-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .date-input-group select {
+      padding: 10px 15px;
+      border: 1px solid var(--mint-green);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgb(0, 0, 0);
+      font-size: 16px;
+    }
+    
+    .submit-btn {
+      background: var(--mint-green);
+      color: var(--bg-color);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 255, 157, 0.3);
+    }
+    
+    .chart-section {
+      margin-bottom: 40px;
+    }
+    
+    .chart-section h3 {
+      color: var(--mint-green);
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    
+    .basic-chart-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    
+    .basic-grid-cell {
+      width: 80px;
+      height: 80px;
+      border: 1px solid var(--mint-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: rgba(0, 255, 157, 0.1);
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--mint-green);
+    }
+    
+    .basic-grid-cell.highlighted {
+      background: rgba(0, 255, 157, 0.3);
+      border: 2px solid var(--mint-green);
+    }
+    
+    .mahadasha-container {
+      overflow-x: auto;
+      padding: 20px 0;
+    }
+    
+    .mahadasha-scroll {
+      display: flex;
+      gap: 20px;
+      min-width: max-content;
+    }
+    
+    .mahadasha-card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 20px;
+      min-width: 320px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .mahadasha-header {
+      text-align: center;
+      margin-bottom: 15px;
+      color: var(--mint-green);
+    }
+    
+    .mahadasha-dates {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+    
+    .pratyantar-container {
+      overflow-x: auto;
+      padding: 20px 0;
+    }
+    
+    .pratyantar-scroll {
+      display: flex;
+      gap: 20px;
+      min-width: max-content;
+    }
+    
+    .pratyantar-card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 20px;
+      min-width: 320px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .pratyantar-header {
+      text-align: center;
+      margin-bottom: 15px;
+      color: var(--mint-green);
+    }
+    
+    .pratyantar-info {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+    
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: var(--mint-green);
+      color: var(--bg-color);
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 255, 157, 0.3);
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 50px;
+      color: var(--mint-green);
+      font-size: 18px;
+    }
+    
+    .user-info {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--mint-green);
+    }
+  </style>
+</head>
+<body>
+  <a href="grid.html" class="back-btn">← Back</a>
+  
+  <div class="chart-container">
+    <div id="loadingMessage" class="loading">
+      Loading your numerology chart...
+    </div>
+    
+    <div id="chartContent" style="display: none;">
+      <div class="user-info">
+        <h2>Numerology Chart for <span id="userName">User</span></h2>
+        <p>Date of Birth: <span id="userDOB"></span></p>
+      </div>
+      
+      <div class="date-selector">
+        <h2>Select Chart Date</h2>
+        <div class="date-input-group">
+          <select id="chartDay">
+            <option value="">Day</option>
+          </select>
+          <select id="chartMonth">
+            <option value="">Month</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+          <select id="chartYear">
+            <option value="">Year</option>
+          </select>
+          <button class="submit-btn" onclick="generateChart()">Generate Chart</button>
+        </div>
+      </div>
+
+      <!-- Basic Chart Section -->
+      <div class="chart-section">
+        <h3>Basic Chart</h3>
+        <div class="basic-chart-grid" id="basicChartGrid"></div>
+      </div>
+
+      <!-- Mahadasha and Antardasha Section -->
+      <div class="chart-section">
+        <h3>Mahadasha and Antardasha</h3>
+        <div class="mahadasha-container">
+          <div class="mahadasha-scroll" id="mahadashaScroll"></div>
+        </div>
+      </div>
+
+      <!-- Pratyantar Dasha Section -->
+      <div class="chart-section">
+        <h3>Pratyantar Dasha</h3>
+        <div class="pratyantar-container">
+          <div class="pratyantar-scroll" id="pratyantarScroll"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Get URL parameters
+    function getUrlParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // Populate date dropdowns
+    function populateDates() {
+      const daySelect = document.getElementById('chartDay');
+      const yearSelect = document.getElementById('chartYear');
+      
+      // Populate days
+      for (let i = 1; i <= 31; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = i;
+        daySelect.appendChild(option);
+      }
+      
+      // Populate years (1900-2100)
+      const currentYear = new Date().getFullYear();
+      for (let i = 1900; i <= 2100; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = i;
+        yearSelect.appendChild(option);
+      }
+    }
+
+    // Get user data from URL parameters or localStorage
+    function getUserData() {
+      // First try URL parameters
+      const dob = getUrlParameter('dob');
+      const name = getUrlParameter('name');
+      
+      if (dob) {
+        return {
+          birthDate: dob,
+          fullName: name || 'User'
+        };
+      }
+      
+      // Fallback to localStorage
+      const userData = localStorage.getItem('numerologyData');
+      if (userData) {
+        return JSON.parse(userData);
+      }
+      
+      return null;
+    }
+
+    // Calculate basic numbers from birth date
+    function calculateBasicNumbers(birthDate) {
+      const date = new Date(birthDate);
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      
+      // Calculate basic number (sum of day digits)
+      const dayDigits = day.toString().split('');
+      const basicSum = dayDigits.reduce((sum, digit) => sum + parseInt(digit), 0);
+      const basicNum = ((basicSum - 1) % 9) + 1;
+      
+      // Calculate destiny number (sum of all digits)
+      const allDigits = [...day.toString(), ...month.toString(), ...year.toString()];
+      const destinySum = allDigits.reduce((sum, digit) => sum + parseInt(digit), 0);
+      const destinyNum = ((destinySum - 1) % 9) + 1;
+      
+      return { basicNum, destinyNum };
+    }
+
+    // Calculate name value for additional numbers
+    function calculateNameValue(fullName) {
+      const letterValues = {
+        'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 8, 'g': 3, 'h': 5, 'i': 1,
+        'j': 1, 'k': 2, 'l': 3, 'm': 4, 'n': 5, 'o': 7, 'p': 8, 'q': 1, 'r': 2,
+        's': 3, 't': 4, 'u': 6, 'v': 6, 'w': 6, 'x': 5, 'y': 1, 'z': 7
+      };
+      
+      const nameSum = fullName.toLowerCase()
+        .replace(/[^a-z]/g, '')
+        .split('')
+        .reduce((sum, letter) => sum + (letterValues[letter] || 0), 0);
+      
+      return ((nameSum - 1) % 9) + 1;
+    }
+
+    // Generate basic chart grid showing only user's DOB numbers
+    function generateBasicChart(basicNum, destinyNum) {
+      const gridContainer = document.getElementById('basicChartGrid');
+      gridContainer.innerHTML = '';
+      
+      const userData = getUserData();
+      if (!userData) return;
+      
+      const date = new Date(userData.birthDate);
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      const lastTwoDigits = year % 100;
+      
+      // Create grid container
+      gridContainer.className = 'grid-container';
+      
+      // Extract all digits from user's DOB
+      const allDigits = [];
+      
+      // Add day digits
+      day.toString().split('').forEach(d => allDigits.push(parseInt(d)));
+      
+      // Add month digits
+      month.toString().split('').forEach(d => allDigits.push(parseInt(d)));
+      
+      // Add year last two digits
+      lastTwoDigits.toString().split('').forEach(d => allDigits.push(parseInt(d)));
+      
+      // Add basic and destiny numbers
+      allDigits.push(basicNum);
+      allDigits.push(destinyNum);
+      
+      // Create 9 grid cells with exact placement pattern
+      const cellLabels = [3, 1, 9, 6, 7, 5, 2, 8, 4]; // grid.html pattern
+      
+      // Create a frequency map of user's digits
+      const digitFrequency = {};
+      allDigits.forEach(digit => {
+        digitFrequency[digit] = (digitFrequency[digit] || 0) + 1;
+      });
+      
+      // Create 9 grid cells
+      for (let i = 1; i <= 9; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'grid-cell';
+        cell.id = `basicCell${i}`;
+        
+        // Set the cell label (background number)
+        const cellLabel = cellLabels[i-1];
+        
+        // Create cell content based on user's digits
+        const labelSpan = document.createElement('span');
+        labelSpan.className = 'cell-label';
+        labelSpan.textContent = cellLabel;
+        
+        // Check if this digit exists in user's DOB
+        if (digitFrequency[cellLabel] && digitFrequency[cellLabel] > 0) {
+          // Show the digit from user's DOB
+          const userNumberSpan = document.createElement('span');
+          userNumberSpan.className = 'user-number';
+          userNumberSpan.textContent = cellLabel;
+          userNumberSpan.style.fontSize = '18px';
+          userNumberSpan.style.fontWeight = 'bold';
+          userNumberSpan.style.color = 'var(--mint-green)';
+          userNumberSpan.style.display = 'block';
+          userNumberSpan.style.marginTop = '2px';
+          
+          cell.appendChild(labelSpan);
+          cell.appendChild(userNumberSpan);
+          
+          // Decrease frequency count
+          digitFrequency[cellLabel]--;
+        } else {
+          // Only show the cell label (empty spot)
+          cell.appendChild(labelSpan);
+        }
+        
+        gridContainer.appendChild(cell);
+      }
+    }
+
+    // Calculate mahadasha periods
+    function calculateMahadashas(birthDate, startDate) {
+      const birth = new Date(birthDate);
+      const start = new Date(startDate);
+      
+      const mahadashas = [];
+      let currentDate = new Date(birth);
+      
+      // Mahadasha sequence: 1-9 with correct years
+      const mahadashaYears = [6, 10, 7, 9, 16, 19, 17, 18, 20]; // Actual Vedic years
+      let mahadashaIndex = 0;
+      
+      // Find starting mahadasha based on birth date
+      for (let i = 0; i < 100; i++) {
+        const mahadashaNum = ((mahadashaIndex) % 9) + 1;
+        const durationYears = mahadashaYears[mahadashaIndex % 9];
+        const durationDays = durationYears * 365.25;
+        
+        const endDate = new Date(currentDate);
+        endDate.setDate(endDate.getDate() + Math.round(durationDays));
+        
+        if (currentDate <= start && start < endDate) {
+          // This is the current mahadasha
+          const antardashas = calculateAntardashas(currentDate, mahadashaNum, start);
+          
+          mahadashas.push({
+            number: mahadashaNum,
+            startDate: new Date(currentDate),
+            endDate: new Date(endDate),
+            antardashas: antardashas
+          });
+          
+          // Add next mahadashas for 100 years
+          let tempEndDate = new Date(endDate);
+          for (let j = 1; j < 20; j++) {
+            const nextMahadashaNum = ((mahadashaIndex + j) % 9) + 1;
+            const nextDurationYears = mahadashaYears[(mahadashaIndex + j) % 9];
+            const nextDurationDays = nextDurationYears * 365.25;
+            const nextStart = new Date(tempEndDate);
+            const nextEnd = new Date(nextStart);
+            nextEnd.setDate(nextEnd.getDate() + Math.round(nextDurationDays));
+            
+            const nextAntardashas = calculateAntardashas(nextStart, nextMahadashaNum, nextStart);
+            
+            mahadashas.push({
+              number: nextMahadashaNum,
+              startDate: nextStart,
+              endDate: nextEnd,
+              antardashas: nextAntardashas
+            });
+            
+            tempEndDate = new Date(nextEnd);
+          }
+          break;
+        }
+        
+        currentDate = endDate;
+        mahadashaIndex++;
+      }
+      
+      return mahadashas;
+    }
+
+    // Calculate antardashas within a mahadasha
+    function calculateAntardashas(mahadashaStart, mahadashaNum, startDate) {
+      const antardashas = [];
+      let currentDate = new Date(mahadashaStart);
+      
+      // Antardasha sequence follows the same pattern as mahadasha
+      const antardashaYears = [6, 10, 7, 9, 16, 19, 17, 18, 20];
+      
+      for (let i = 0; i < 9; i++) {
+        const antardashaNum = ((mahadashaNum + i - 1) % 9) + 1;
+        const durationYears = (antardashaYears[antardashaNum - 1] / 120) * antardashaYears[mahadashaNum - 1];
+        const durationDays = durationYears * 365.25;
+        
+        const endDate = new Date(currentDate);
+        endDate.setDate(endDate.getDate() + Math.round(durationDays));
+        
+        if (currentDate <= startDate && startDate < endDate) {
+          // This is the current antardasha
+          const pratyantardashas = calculatePratyantardashas(currentDate, antardashaNum, startDate, mahadashaNum);
+          
+          antardashas.push({
+            number: antardashaNum,
+            startDate: new Date(currentDate),
+            endDate: new Date(endDate),
+            pratyantardashas: pratyantardashas
+          });
+          
+          // Add remaining antardashas
+          for (let j = 1; j < 9 - i; j++) {
+            const nextAntardashaNum = ((mahadashaNum + i + j - 1) % 9) + 1;
+            const nextDurationYears = (antardashaYears[nextAntardashaNum - 1] / 120) * antardashaYears[mahadashaNum - 1];
+            const nextDurationDays = nextDurationYears * 365.25;
+            const nextStart = new Date(endDate);
+            const nextEnd = new Date(nextStart);
+            nextEnd.setDate(nextEnd.getDate() + Math.round(nextDurationDays));
+            
+            const nextPratyantardashas = calculatePratyantardashas(nextStart, nextAntardashaNum, nextStart, mahadashaNum);
+            
+            antardashas.push({
+              number: nextAntardashaNum,
+              startDate: nextStart,
+              endDate: nextEnd,
+              pratyantardashas: nextPratyantardashas
+            });
+            
+            endDate.setDate(endDate.getDate() + Math.round(nextDurationDays));
+          }
+          break;
+        }
+        
+        currentDate = endDate;
+      }
+      
+      return antardashas;
+    }
+
+    // Calculate pratyantardashas within an antardasha
+    function calculatePratyantardashas(antardashaStart, antardashaNum, startDate, mahadashaNum) {
+      const pratyantardashas = [];
+      let currentDate = new Date(antardashaStart);
+      
+      // Pratyantardasha follows the same proportional pattern
+      const antardashaYears = [6, 10, 7, 9, 16, 19, 17, 18, 20];
+      
+      for (let i = 0; i < 9; i++) {
+        const pratyantarNum = ((antardashaNum + i - 1) % 9) + 1;
+        const antardashaDurationYears = (antardashaYears[antardashaNum - 1] / 120) * antardashaYears[mahadashaNum - 1];
+        const durationDays = Math.round((antardashaYears[pratyantarNum - 1] / 120) * antardashaDurationYears * 365.25);
+        
+        const endDate = new Date(currentDate);
+        endDate.setDate(endDate.getDate() + durationDays);
+        
+        pratyantardashas.push({
+          number: pratyantarNum,
+          startDate: new Date(currentDate),
+          endDate: new Date(endDate)
+        });
+        
+        currentDate = endDate;
+      }
+      
+      return pratyantardashas;
+    }
+
+    // Format date for display
+    function formatDate(date) {
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    }
+
+    // Generate mahadasha display
+    function generateMahadashaDisplay(mahadashas) {
+      const container = document.getElementById('mahadashaScroll');
+      container.innerHTML = '';
+      
+      mahadashas.forEach(maha => {
+        const card = document.createElement('div');
+        card.className = 'mahadasha-card';
+        
+        let antardashaHtml = '';
+        maha.antardashas.forEach(antar => {
+          antardashaHtml += `
+            <div style="margin: 10px 0; padding: 10px; background: rgba(0,255,157,0.1); border-radius: 8px;">
+              <strong>Antardasha ${antar.number}</strong><br>
+              ${formatDate(antar.startDate)} - ${formatDate(antar.endDate)}
+            </div>
+          `;
+        });
+        
+        card.innerHTML = `
+          <div class="mahadasha-header">
+            <h4>Mahadasha ${maha.number}</h4>
+            <div class="mahadasha-dates">
+              ${formatDate(maha.startDate)} - ${formatDate(maha.endDate)}
+            </div>
+          </div>
+          <div class="basic-chart-grid">
+            ${generateSmallGrid(maha.number)}
+          </div>
+          ${antardashaHtml}
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+
+    // Generate pratyantar display
+    function generatePratyantarDisplay(mahadashas) {
+      const container = document.getElementById('pratyantarScroll');
+      container.innerHTML = '';
+      
+      mahadashas.forEach(maha => {
+        maha.antardashas.forEach(antar => {
+          antar.pratyantardashas.forEach(pratyantar => {
+            const card = document.createElement('div');
+            card.className = 'pratyantar-card';
+            
+            card.innerHTML = `
+              <div class="pratyantar-header">
+                <h4>Pratyantar Dasha ${pratyantar.number}</h4>
+                <div class="pratyantar-info">
+                  Mahadasha: ${maha.number}, Antardasha: ${antar.number}<br>
+                  ${formatDate(pratyantar.startDate)} - ${formatDate(pratyantar.endDate)}
+                </div>
+              </div>
+              <div class="basic-chart-grid">
+                ${generateSmallGrid(pratyantar.number)}
+              </div>
+            `;
+            
+            container.appendChild(card);
+          });
+        });
+      });
+    }
+
+    // Generate small grid for cards
+    function generateSmallGrid(activeNumber) {
+      const positions = [
+        [3, 1, 9],
+        [6, 7, 5],
+        [2, 8, 4]
+      ];
+      
+      let html = '';
+      positions.forEach(row => {
+        row.forEach(num => {
+          html += `
+            <div class="grid-cell-small">
+              <span class="cell-label">${num}</span>
+            </div>
+          `;
+        });
+      });
+      
+      return html;
+    }
+
+    // Main chart generation function
+    function generateChart() {
+      const day = document.getElementById('chartDay').value;
+      const month = document.getElementById('chartMonth').value;
+      const year = document.getElementById('chartYear').value;
+      
+      if (!day || !month || !year) {
+        alert('Please select a valid date');
+        return;
+      }
+      
+      const userData = getUserData();
+      if (!userData) {
+        alert('User data not found. Please return to the main page and calculate your numerology first.');
+        return;
+      }
+      
+      const chartDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+      const { basicNum, destinyNum } = calculateBasicNumbers(userData.birthDate);
+      
+      // Generate all displays
+      generateBasicChart(basicNum, destinyNum);
+      
+      const mahadashas = calculateMahadashas(userData.birthDate, chartDate);
+      generateMahadashaDisplay(mahadashas);
+      generatePratyantarDisplay(mahadashas);
+    }
+
+    // Initialize chart with user's DOB
+    function initializeChart() {
+      const userData = getUserData();
+      
+      if (!userData) {
+        document.getElementById('loadingMessage').innerHTML = `
+          <p>User data not found.</p>
+          <p><a href="grid.html" style="color: var(--mint-green);">Please return to the main page and calculate your numerology first.</a></p>
+        `;
+        return;
+      }
+      
+      // Display user info
+      document.getElementById('userName').textContent = userData.fullName;
+      document.getElementById('userDOB').textContent = new Date(userData.birthDate).toLocaleDateString();
+      
+      // Hide loading and show content
+      document.getElementById('loadingMessage').style.display = 'none';
+      document.getElementById('chartContent').style.display = 'block';
+      
+      // Populate dates
+      populateDates();
+      
+      // Set default chart date to today
+      const today = new Date();
+      document.getElementById('chartDay').value = today.getDate();
+      document.getElementById('chartMonth').value = today.getMonth() + 1;
+      document.getElementById('chartYear').value = today.getFullYear();
+      
+      // Generate initial chart
+      generateChart();
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', initializeChart);
+  </script>
+</body>
+</html>

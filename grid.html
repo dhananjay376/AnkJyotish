@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Numerology Destiny Calculator</title>
+
+  <!-- Fonts & CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
+
+  <!-- Defer JS so it runs after HTML is parsed -->
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-container">
+        <img src="Ankjyotish logo.jpg" alt="Brand Logo" class="logo">
+        <h1><a href="index.html" style="color: var(--mint-green); text-decoration: none;">AnkJyōtish</a></h1>
+      </div>
+      <p class="tagline">Powered by Sudhir K Narula</p>
+      <p>Discover Your Life Path Through Numbers</p>
+    </header>
+
+    <!-- Input Section -->
+    <section class="input-section">
+      <div class="input-card">
+        <h2>Enter Your Details</h2>
+
+        <form id="numerologyForm">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="birthDate">Birth Date</label>
+            <input type="date" id="birthDate" name="birthDate" required>
+          </div>
+
+          <button type="submit" class="calculate-btn" id="calculateBtn">
+            <span>Calculate Destiny</span>
+            <div class="ripple"></div>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Vedic Numerology Grid -->
+    <section class="grid-section" id="gridSection" style="display:none;">
+      <h2>Your Vedic Numerology Grid</h2>
+
+      <!-- 3x3 grid cells: cell1..cell9 (row-major) -->
+      <!-- Mapping used (number -> cell index):
+           Row1: [3, 1, 9]  => cells 1..3
+           Row2: [6, 7, 5]  => cells 4..6
+           Row3: [2, 8, 4]  => cells 7..9
+           So: 1→2, 2→7, 3→1, 4→9, 5→6, 6→4, 7→5, 8→8, 9→3
+      -->
+      <div class="grid-container" id="gridContainer">
+        <div class="grid-cell" id="cell1" data-cell-label="3">
+          <span class="cell-label">3</span>
+          <span class="mahadasha-number" style="color:#ff0000ff;">1</span>
+          <span class="antardasha-number" style="color:#ff03dd;">7</span>
+        </div>
+        <div class="grid-cell" id="cell2" data-cell-label="1">
+          <span class="cell-label">1</span>
+          <span class="mahadasha-number" style="color:#ff0000ff;">2</span>
+          <span class="antardasha-number" style="color:#ff03dd;">8</span>
+        </div>
+        <div class="grid-cell" id="cell3" data-cell-label="9">
+          <span class="cell-label">9</span>
+          <span class="mahadasha-number" style="color:#ff0000ff;">3</span>
+          <span class="antardasha-number" style="color:#ff03dd;">9</span>
+        </div>
+        <div class="grid-cell" id="cell4" data-cell-label="6">
+          <span class="cell-label">6</span>
+          <span class="mahadasha-number" style="color:#ff0000ff;">4</span>
+          <span class="antardasha-number" style="color:#ff03dd;">1</span>
+        </div>
+        <div class="grid-cell" id="cell5" data-cell-label="7">
+          <span class="cell-label">7</span>
+          <span class="mahadasha-number" style="color:#ff0000ff;">5</span>
+          <span class="antardasha-number" style="color:#ff03dd;">2</span>
+        </div>
+        <div class="grid-cell" id="cell6" data-cell-label="5">
+          <span class="cell-label">5</span>
+          <span class="mahadasha-number" style="color:#ff0000ff;">6</span>
+          <span class="antardasha-number" style="color:#ff03dd;">3</span>
+        </div>
+        <div class="grid-cell" id="cell7" data-cell-label="2">
+          <span class="cell-label">2</span>
+          <span class="mahadasha-number" style="color:#ff0000ff;">7</span>
+          <span class="antardasha-number" style="color:#ff03dd;">4</span>
+        </div>
+        <div class="grid-cell" id="cell8" data-cell-label="8">
+          <span class="cell-label">8</span>
+          <span class="mahadasha-number" style="color:#ff0000ff;">8</span>
+          <span class="antardasha-number" style="color:#ff03dd;">5</span>
+        </div>
+        <div class="grid-cell" id="cell9" data-cell-label="4">
+          <span class="cell-label">4</span>
+          <span class="mahadasha-number" style="color:#ff0000ff;">9</span>
+          <span class="antardasha-number" style="color:#ff03dd;">6</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="resultsSection" style="display:none;">
+      <div class="results-grid">
+
+      <!-- Destiny Number -->
+        <div class="result-card destiny-card">
+          <div class="card-header">
+            <h3>Destiny Number</h3>
+            <div class="number-display" id="destinyNumber">0</div>
+          </div>
+          <div class="card-content">
+            <p id="destinyDescription">Your life path number reveals your ultimate purpose.</p>
+          </div>
+        </div>
+
+        <!-- Basic Number -->
+        <div class="result-card basic-card">
+          <div class="card-header">
+            <h3>Basic Number</h3>
+            <div class="number-display" id="basicNumber">0</div>
+          </div>
+          <div class="card-content">
+            <p id="basicDescription">Your core personality traits and natural abilities.</p>
+          </div>
+        </div>
+
+        <!-- Dasha Period -->
+        <div class="result-card dasha-card">
+          <div class="card-header">
+            <h3>Maha Dasha</h3>
+            <div class="period-display" id="currentDasha">Loading...</div>
+          </div>
+          <div class="card-content">
+            <p id="dashaDescription">Your current planetary period influences.</p>
+            <div class="timeline" id="dashaTimeline">
+              <div class="timeline-progress" id="dashaProgress" style="width:0%;"></div>
+            </div>
+            <div class="period-dates">
+              <span id="dashaStart"></span>
+              <span id="dashaEnd"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Antardasha -->
+        <div class="result-card antardasha-card">
+          <div class="card-header">
+            <h3>Antardasha</h3>
+            <div class="period-display" id="currentAntardasha">Loading...</div>
+          </div>
+          <div class="card-content">
+            <p id="antardashaDescription">Sub-period within your current dasha.</p>
+          </div>
+        </div>
+
+        <!-- Lucky No. -->
+        <div class="result-card lucky-no-card">
+          <div class="card-header">
+            <h3>Lucky No.</h3>
+            <div class="number-display" id="luckyNumber">0</div>
+          </div>
+          <div class="card-content">
+            <p id="luckyNumberDescription">Your personal lucky number based on destiny and name vibrations.</p>
+          </div>
+        </div>
+
+        <!-- Lucky Color -->
+        <div class="result-card lucky-color-card">
+          <div class="card-header">
+            <h3>Lucky Color</h3>
+            <div class="color-display" id="luckyColor" style="width: 30px; height: 30px; border-radius: 50%; display: inline-block; margin-right: 10px;"></div>
+            <span id="luckyColorName">Loading...</span>
+          </div>
+          <div class="card-content">
+            <p id="luckyColorDescription">The color that harmonizes with your numerological vibrations.</p>
+          </div>
+        </div>
+
+        <!-- Zodiac Sign -->
+        <div class="result-card zodiac-card">
+          <div class="card-header">
+            <h3>Planet of Destiny</h3>
+            <div class="sign-display" id="zodiacSign">Loading...</div>
+          </div>
+          <div class="card-content">
+            <p id="zodiacDescription">The ruling planet for your destiny number and its numerological significance.</p>
+          </div>
+        </div>
+
+        <!-- Lucky Direction -->
+        <div class="result-card lucky-direction-card">
+          <div class="card-header">
+            <h3>Lucky Direction</h3>
+            <div class="direction-display" id="luckyDirection">Loading...</div>
+          </div>
+          <div class="card-content">
+            <p id="luckyDirectionDescription">The cardinal direction that brings prosperity and positive energy.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed Analysis -->
+      <div class="analysis-section">
+        <h2>Detailed Numerology Analysis</h2>
+        <div class="analysis-content" id="analysisContent">
+          <div class="analysis-item">
+            <h4>Life Path Insights</h4>
+            <p id="lifePathInsights">Based on your numbers…</p>
+          </div>
+          <div class="analysis-item">
+            <h4>Recommendations</h4>
+            <p id="recommendations">To maximize this period…</p>
+          </div>
+          <div class="analysis-item">
+            <h4>Destiny Number Influence</h4>
+            <p><strong>Destiny Number <span id="destinyNumberInfluence">1</span></strong></p>
+            <ul id="destinyFeatures">
+              <li>Confident</li>
+              <li>Great Leadership Quality</li>
+              <li>Very Good Management</li>
+              <li>Authoritative</li>
+              <li>Dominating</li>
+              <li>Name & Fame</li>
+              <li>Egoistic</li>
+              <li>Short-Tempered</li>
+              <li>Stubborn</li>
+              <li>Always Motivated & Motivating Others</li>
+              <li>Business Number</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Buttons -->
+    <section class="navigation-section" id="navigationSection" style="display:none;">
+      <div class="nav-buttons">
+        <a href="#" class="nav-btn chart-btn" onclick="openChart()">Chart</a>
+        <a href="#" class="nav-btn name-numerology-btn">Name Numerology</a>
+        <a href="#" class="nav-btn full-report-btn">Full Report</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 AnkJyōtish. All rights reserved.</p>
+      <p>Powered by Sudhir K Narula</p>
+    </footer>
+  </div>
+
+  <!-- Background Animation -->
+  <div class="bg-animation">
+    <div class="floating-number">1</div>
+    <div class="floating-number">3</div>
+    <div class="floating-number">7</div>
+    <div class="floating-number">9</div>
+  </div>
+
+  <script>
+    // Function to open chart in new page with user data
+    function openChart() {
+      const userData = localStorage.getItem('numerologyData');
+      if (!userData) {
+        alert('Please calculate your numerology first');
+        return;
+      }
+      
+      const data = JSON.parse(userData);
+      const url = `chart.html?dob=${encodeURIComponent(data.birthDate)}&name=${encodeURIComponent(data.fullName)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>

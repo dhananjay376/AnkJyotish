@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnkJyōtish - Numerology Predictions & Courses</title>
+    <style>
+        :root {
+            --dark-green: #1C2529;
+            --mint-green: #A1D1B1;
+            --light-mint: #E8F5E9;
+            --gold: #D4AF37;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-green);
+            color: var(--light-mint);
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(28, 37, 41, 0.9);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo-container img {
+            height: 50px;
+            transition: var(--transition);
+        }
+        
+        .logo-container img:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--mint-green);
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        nav a {
+            color: var(--light-mint);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            letter-spacing: 1px;
+        }
+        
+        nav a:hover {
+            color: var(--mint-green);
+            background-color: rgba(161, 209, 177, 0.1);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--mint-green);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 5rem;
+            background: linear-gradient(rgba(28, 37, 41, 0.7), rgba(28, 37, 41, 0.9)), url('Ankjyotish logo.jpg') center/cover no-repeat;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--mint-green);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--mint-green);
+            color: var(--dark-green);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--mint-green);
+            border-color: var(--mint-green);
+            transform: translateY(-3px);
+        }
+
+        .admin-btn {
+            background-color: var(--gold);
+            margin-left: 15px;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 30px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: var(--dark-green);
+        }
+
+        .admin-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        
+        /* About Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--mint-green);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--mint-green), transparent);
+        }
+        
+        .about {
+            padding: 5rem 5%;
+            background-color: rgba(161, 209, 177, 0.05);
+        }
+        
+        .about-container {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            transition: var(--transition);
+        }
+        
+        .about-image img:hover {
+            transform: scale(1.03);
+        }
+        
+        .about-content {
+            flex: 1;
+        }
+        
+        .about-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--mint-green);
+        }
+        
+        .about-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 5rem 5%;
+        }
+        
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .service-card {
+            background-color: rgba(161, 209, 177, 0.1);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(161, 209, 177, 0.2);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--mint-green);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: var(--mint-green);
+            margin-bottom: 1rem;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--mint-green);
+        }
+        
+        .service-card p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--gold);
+        }
+        
+        .buy-button {
+            display: inline-block;
+            background-color: var(--mint-green);
+            color: var(--dark-green);
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+        
+        .buy-button:hover {
+            background-color: transparent;
+            color: var(--mint-green);
+            border-color: var(--mint-green);
+        }
+        
+        /* Courses Section */
+        .courses {
+            padding: 5rem 5%;
+            background-color: rgba(161, 209, 177, 0.05);
+        }
+        
+        .courses-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .course-card {
+            background-color: rgba(161, 209, 177, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(161, 209, 177, 0.2);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .course-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .course-card:hover .course-image img {
+            transform: scale(1.1);
+        }
+        
+        .course-content {
+            padding: 1.5rem;
+        }
+        
+        .course-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--mint-green);
+        }
+        
+        .course-content .price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        
+        .course-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 5%;
+        }
+        
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .testimonial-card {
+            background-color: rgba(161, 209, 177, 0.1);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 0 auto;
+            max-width: 800px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(161, 209, 177, 0.2);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .testimonial-text:before,
+        .testimonial-text:after {
+            content: '"';
+            color: var(--mint-green);
+            font-size: 2rem;
+            opacity: 0.5;
+        }
+        
+        .testimonial-text:before {
+            position: absolute;
+            left: -20px;
+            top: -10px;
+        }
+        
+        .testimonial-text:after {
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .author-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            color: var(--mint-green);
+            margin-bottom: 0.3rem;
+        }
+        
+        .author-info p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 5rem 5%;
+            background-color: rgba(161, 209, 177, 0.05);
+        }
+        
+        .contact-container {
+            display: flex;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--mint-green);
+        }
+        
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-info-icon {
+            font-size: 1.5rem;
+            color: var(--mint-green);
+        }
+        
+        .contact-form {
+            flex: 1;
+            background-color: rgba(161, 209, 177, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--mint-green);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 4px;
+            border: 1px solid rgba(161, 209, 177, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--light-mint);
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--mint-green);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .submit-btn {
+            background-color: var(--mint-green);
+            color: var(--dark-green);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .submit-btn:hover {
+            background-color: transparent;
+            color: var(--mint-green);
+            border: 2px solid var(--mint-green);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: rgba(28, 37, 41, 0.9);
+            padding: 3rem 5% 1rem;
+            border-top: 1px solid rgba(161, 209, 177, 0.2);
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo img {
+            height: 40px;
+        }
+        
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--mint-green);
+        }
+        
+        .footer-about p {
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            color: var(--light-mint);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            color: var(--mint-green);
+            transform: translateY(-3px);
+        }
+        
+        .footer-heading {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--mint-green);
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: var(--light-mint);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--mint-green);
+            padding-left: 5px;
+        }
+        
+        .newsletter-form input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 4px;
+            border: 1px solid rgba(161, 209, 177, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--light-mint);
+            margin-bottom: 1rem;
+        }
+        
+        .newsletter-btn {
+            background-color: var(--mint-green);
+            color: var(--dark-green);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .newsletter-btn:hover {
+            background-color: transparent;
+            color: var(--mint-green);
+            border: 2px solid var(--mint-green);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(161, 209, 177, 0.2);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .about-container,
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .about-image,
+            .about-content,
+            .contact-info,
+            .contact-form {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            
+            nav {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--dark-green);
+                transition: var(--transition);
+                z-index: 999;
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 2rem;
+                align-items: center;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        /* Testimonials Slider Styles */
+        .testimonials-slider {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .testimonial-slide {
+            display: none;
+            animation: slideInLeft 0.5s ease forwards;
+        }
+
+        .testimonial-slide.active {
+            display: block;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .quote-icon {
+            color: var(--mint-green);
+            font-size: 1.5rem;
+            font-style: normal;
+        }
+
+        .rating {
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .slider-btn {
+            background-color: var(--mint-green);
+            color: var(--dark-green);
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .slider-btn:hover {
+            background-color: var(--gold);
+            transform: scale(1.1);
+        }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .dot {
+            height: 12px;
+            width: 12px;
+            background-color: rgba(161, 209, 177, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dot.active, .dot:hover {
+            background-color: var(--mint-green);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        
+        .modal-content {
+            background: #1C2529;
+            padding: 30px;
+            border-radius: 10px;
+            color: #E8F5E9;
+            text-align: center;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <img src="Ankjyotish logo.jpg" alt="AnkJyōtish Logo - Mystic eye symbol with celestial elements" />
+            <div class="logo-text"><a href="index.html" style="color: var(--mint-green); text-decoration: none;">AnkJyōtish</a></div>
+        </div>
+        
+        <nav id="nav">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#contact">Contact</a></li>
+            <li><a href="content.html">Content</a></li>
+            </ul>
+        </nav>
+        
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Unlock Your Destiny With Numerology</h1>
+            <p>Discover the hidden meanings in your numbers and how they influence your life's path with AnkJyōtish's expert numerology guidance.</p>
+            <a href="#services" class="cta-button">Explore Services</a>
+            <button class="cta-button admin-btn" onclick="window.location.href='admin.html'">Admin Portal</button>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2 class="section-title">About AnkJyōtish</h2>
+        
+        <div class="about-container">
+            <div class="about-image animate">
+                <img src="Sudhir Businees Pic.jpg" alt="AnkJyōtish Numerologist - Wise spiritual guide in traditional attire performing numerology readings" />
+            </div>
+            
+            <div class="about-content animate">
+                <h3>Your Guide to Numerology Mastery</h3>
+                <p>AnkJyōtish blends ancient numerological wisdom with modern insights to help you understand your life's blueprint through numbers.</p>
+                <p>Our founder has over 15 years of experience decoding the mystical language of numbers, helping thousands find clarity and purpose.</p>
+                <p>Each number carries unique vibrations that shape our personality, relationships, career, and life events. By understanding these energies, we can align with our true path and manifest our greatest potential.</p>
+                <a href="#services" class="cta-button">Discover Your Numbers</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2 class="section-title">Numerology Services</h2>
+        
+        <div class="services-container">
+            <div class="service-card animate">
+                <div class="service-icon">1</div>
+                <h3>Personal Numerology Reading</h3>
+                <p>Comprehensive analysis of your life path number, destiny number, and soul urge number revealing your life's purpose and challenges.</p>
+                <div class="service-price">₹99</div>
+                <button class="buy-button" onclick="handleServicePurchase('Personal Numerology Reading', '₹99')">Purchase Now</button>
+            </div>
+            
+            <div class="service-card animate">
+                <div class="service-icon">2</div>
+                <h3>Relationship Compatibility</h3>
+                <p>Discover how your numbers interact with your partner's for deeper understanding and harmony in your relationship.</p>
+                <div class="service-price">₹299</div>
+                <button class="buy-button" onclick="handleServicePurchase('Relationship Compatibility', '₹299')">Purchase Now</button>
+            </div>
+            
+            <div class="service-card animate">
+                <div class="service-icon">3</div>
+                <h3>Business Name Analysis</h3>
+                <p>Optimize your business success with a numerological evaluation of your company name and launch dates.</p>
+                <div class="service-price">₹399</div>
+                <button class="buy-button" onclick="handleServicePurchase('Business Name Analysis', '₹399')">Purchase Now</button>
+            </div>
+            
+            <div class="service-card animate">
+                <div class="service-icon">4</div>
+                <h3>Yearly Forecast</h3>
+                <p>Detailed analysis of your personal year number and how planetary transits influence your coming year.</p>
+                <div class="service-price">₹99</div>
+                <button class="buy-button" onclick="handleServicePurchase('Yearly Forecast', '₹99')">Purchase Now</button>
+            </div>
+            
+            <div class="service-card animate">
+                <div class="service-icon">5</div>
+                <h3>Baby Name Consultation</h3>
+                <p>Select the perfect name for your newborn based on numerological harmony with birth date and family vibrations.</p>
+                <div class="service-price">₹499</div>
+                <button class="buy-button" onclick="handleServicePurchase('Baby Name Consultation', '₹499')">Purchase Now</button>
+            </div>
+            
+            <div class="service-card animate">
+                <div class="service-icon">6</div>
+                <h3>Custom House Number Analysis</h3>
+                <p>Evaluate your home's address number to understand how its vibrations affect your family's energy and wellbeing.</p>
+                <div class="service-price">₹299</div>
+                <button class="buy-button" onclick="handleServicePurchase('House Number Analysis', '₹299')">Purchase Now</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Courses Section -->
+    <section class="courses" id="courses">
+        <h2 class="section-title">Numerology Courses</h2>
+        
+        <div class="courses-container">
+            <div class="course-card animate">
+                <div class="course-image">
+                    <img src="numbers floating.jpg" alt="Numerology Basics Course - Ancient scroll with numbers floating in mystical light" />
+                </div>
+                <div class="course-content">
+                    <h3>Numerology Basics</h3>
+                    <div class="price">₹1015</div>
+                    <p>Master the fundamentals of numerology including calculating core numbers and interpreting their meanings.</p>
+                    <button class="buy-button" onclick="handleCourseEnrollment('Numerology Basics', '₹1015')">Enroll Now</button>
+                </div>
+            </div>
+            
+            <div class="course-card animate">
+                <div class="course-image">
+                    <img src="numbers around saadhu.jpg" alt="Advanced Numerology Techniques - Constellation of numbers forming sacred geometry" />
+                </div>
+                <div class="course-content">
+                    <h3>Advanced Techniques</h3>
+                    <div class="price">₹10000</div>
+                    <p>Learn advanced calculation methods including pinnacles, challenges, and personal years forecasting.</p>
+                    <button class="buy-button" onclick="handleCourseEnrollment('Advanced Techniques', '₹10000')">Enroll Now</button>
+                </div>
+            </div>
+            
+            <div class="course-card animate">
+                <div class="course-image">
+                    <img src="advance saadhu.jpg" alt="Numerology for Professionals - Modern office setting with numerology charts on digital devices" />
+                </div>
+                <div class="course-content">
+                    <h3>Professional Practitioner</h3>
+                    <div class="price">₹16000</div>
+                    <p>Comprehensive training to become a certified numerology consultant with business strategies included.</p>
+                    <button class="buy-button" onclick="handleCourseEnrollment('Professional Practitioner', '₹16000')">Enroll Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <h2 class="section-title">Client Experiences</h2>
+        
+        <div class="testimonials-container">
+            <div class="testimonials-slider">
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            <i class="quote-icon">"</i>
+                            AnkJyōtish’s numerology reading opened my eyes. Understanding my life path number suddenly made sense of patterns I’d never noticed before. After following their advice, I’ve seen big changes in both my career and relationships.
+                            <i class="quote-icon">"</i>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <img src="shree business woman.jpg" alt="Shree Upadhyay - Happy Indian professional woman" />
+                            </div>
+                            <div class="author-info">
+                                <h4>Shree Upadhyay</h4>
+                                <p>Entrepreneur, Mumbai</p>
+                                <div class="rating">★★★★★</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            <i class="quote-icon">"</i>
+                            My business had been stuck for years. I went to AnkJyōtish for a name analysis, made a few small changes, and honestly, I was shocked—my revenue tripled in just 6 months. Their tips on launch dates have really made a difference.
+                            <i class="quote-icon">"</i>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <img src="vaibhav.jpg" alt="Vaibhav Agrawal - Successful Indian businessman" />
+                            </div>
+                            <div class="author-info">
+                                <h4>Vaibhav Agrawal</h4>
+                                <p>Business Owner, Delhi</p>
+                                <div class="rating">★★★★★</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            <i class="quote-icon">"</i>
+                            The compatibility reading from AnkJyōtish honestly saved my marriage. Learning how our numbers work together helped my husband and me understand each other better. The simple remedies brought back harmony at home—I’m truly grateful.
+                            <i class="quote-icon">"</i>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <img src="priya housewife.jpg" alt="Priya Patel - Happy Indian housewife" />
+                            </div>
+                            <div class="author-info">
+                                <h4>Priya Patel</h4>
+                                <p>Homemaker, Ahmedabad</p>
+                                <div class="rating">★★★★★</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            <i class="quote-icon">"</i>
+                            As a Robotics engineer, I was skeptical about numerology. But the career guidance based on my numbers was spot-on! It helped me choose the right time for job changes and negotiate better salaries. Now I'm a believer in the power of numbers!
+                            <i class="quote-icon">"</i>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <img src="pushkar.jpg" alt="Pushkar Shinde - IT Professional" />
+                            </div>
+                            <div class="author-info">
+                                <h4>Pushkar Shinde</h4>
+                                <p>Robotics Engineer, USA</p>
+                                <div class="rating">★★★★★</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            <i class="quote-icon">"</i>
+                            I reached out to AnkJyōtish for a baby name consultation. The process was simple, and the name they suggested felt meaningful and positive. Everyone in the family loved it, and I truly feel it will bring good energy to my child’s life.
+                            <i class="quote-icon">"</i>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <img src="neha.jpg" alt="Neha Gupta - Proud mother" />
+                            </div>
+                            <div class="author-info">
+                                <h4>Neha Gupta</h4>
+                                <p>Teacher, Jaipur</p>
+                                <div class="rating">★★★★★</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            <i class="quote-icon">"</i>
+                            After years of health issues, the numerological remedies suggested by AnkJyōtish brought significant improvement. The analysis of my health numbers and personalized mantras have been life-changing. My energy levels are better than ever!
+                            <i class="quote-icon">"</i>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <img src="proffesional sarah.jpg" alt="Vikram Singh - Health enthusiast" />
+                            </div>
+                            <div class="author-info">
+                                <h4>Vikram Singh</h4>
+                                <p>Yoga Instructor, Rishikesh</p>
+                                <div class="rating">★★★★★</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            <i class="quote-icon">"</i>
+                            The yearly forecast reading has become my annual tradition! Every prediction has been accurate, from career opportunities to relationship developments. It helps me plan my year strategically and make the most of favorable periods.
+                            <i class="quote-icon">"</i>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <img src="anita.jpg" alt="Anita Desai - Marketing Manager" />
+                            </div>
+                            <div class="author-info">
+                                <h4>Anita Desai</h4>
+                                <p>Marketing Manager, Pune</p>
+                                <div class="rating">★★★★★</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slider-controls">
+                <button class="slider-btn prev-btn" onclick="moveSlide(-1)">❮</button>
+                <button class="slider-btn next-btn" onclick="moveSlide(1)">❯</button>
+            </div>
+            
+            <div class="slider-dots">
+                <span class="dot active" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+                <span class="dot" onclick="currentSlide(5)"></span>
+                <span class="dot" onclick="currentSlide(6)"></span>
+                <span class="dot" onclick="currentSlide(7)"></span>
+                <span class="dot" onclick="currentSlide(8)"></span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        
+        <div class="contact-container">
+            <div class="contact-info animate">
+                <h3>Connect With Us</h3>
+                
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">✉️</div>
+                    <div>
+                        <h4>Email</h4>
+                        <p>numerosudhir@gmail.com</p>
+                    </div>
+                </div>
+                
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">📱</div>
+                    <div>
+                        <h4>Phone</h4>
+                        <p>+91 7351257315</p>
+                    </div>
+                </div>
+                
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">📍</div>
+                    <div>
+                        <h4>Consultation Hours</h4>
+                        <p>Monday - Friday: 9am - 6pm EST</p>
+                        <p>Weekends: By appointment</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form animate">
+                <h3>Send A Message</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" rows="5" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <img src="Ankjyotish logo.jpg" alt="AnkJyōtish Logo small - Mystic eye symbol with celestial elements" />
+                    <div class="footer-logo-text">AnkJyōtish</div>
+                </div>
+                <p>Unlocking the mystical language of numbers to guide your life's journey.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">FB</a>
+                    <a href="https://www.instagram.com/numerosudhir?igsh=NG0wZm1neXVhYTM5" class="social-link">IG</a>
+                    <a href="#" class="social-link">TW</a>
+                    <a href="#" class="social-link">YT</a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="footer-heading">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="grid.html">Grid Maker</a></li>
+                    <li><a href="landing.html">Landing Page</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="footer-heading">Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#services">Personal Reading</a></li>
+                    <li><a href="#services">Relationship Analysis</a></li>
+                    <li><a href="#services">Business Name</a></li>
+                    <li><a href="#services">Yearly Forecast</a></li>
+                    <li><a href="#services">Baby Name</a></li>
+                    <li><a href="#services">House Number</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="footer-heading">Newsletter</h3>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your Email Address" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+                <p>Receive numerology insights, special offers, and updates.</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 AnkJyōtish - All Rights Reserved</p>
+        </div>
+    </footer>
+    
+        <script>
+            // Removed login modal and related login code to avoid duplicate login portals
+
+            function showAnalytics() {
+                alert('Analytics feature coming soon!');
+            }
+
+            function showStudents() {
+                alert('Student management feature coming soon!');
+            }
+
+            function showPayments() {
+                alert('Payment management feature coming soon!');
+            }
+
+            function showEmails() {
+                alert('Email campaigns feature coming soon!');
+            }
+
+            // Service purchase handler
+            window.handleServicePurchase = function(serviceName, price) {
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                    background: rgba(0,0,0,0.8); display: flex; justify-content: center;
+                    align-items: center; z-index: 10000;
+                `;
+
+                modal.innerHTML = `
+                    <div style="background: #1C2529; padding: 30px; border-radius: 10px; color: #E8F5E9;">
+                        <h3>Secure Payment</h3>
+                        <p>Service: ${serviceName}</p>
+                        <p>Price: ${price}</p>
+                        <button onclick="window.open('https://rzp.io/rzp/NumeroSudhir', '_blank')" 
+                                style="background: #A1D1B1; color: #1C2529; padding: 10px 20px; 
+                                       border: none; border-radius: 5px;">Proceed to Payment</button>
+                        <button onclick="this.parentElement.parentElement.remove()" 
+                                style="background: #666; color: white; padding: 10px 20px; 
+                                       border: none; border-radius: 5px; margin-left: 10px;">Cancel</button>
+                    </div>
+                `;
+
+                document.body.appendChild(modal);
+            };
+
+            // Course enrollment handler
+            window.handleCourseEnrollment = function(courseName, price) {
+                window.open('https://rzp.io/rzp/NumeroSudhir', '_blank');
+            };
+
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const nav = document.getElementById('nav');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                nav.classList.toggle('active');
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                if (anchor.getAttribute('href') !== '#') {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        nav.classList.remove('active');
+
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                }
+            });
+
+            // Scroll animation
+            const animateElements = document.querySelectorAll('.animate');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.cssText = 'opacity: 1; transform: translateY(0); transition: all 0.6s ease;';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            animateElements.forEach(element => {
+                element.style.cssText = 'opacity: 0; transform: translateY(20px); transition: all 0.6s ease;';
+                observer.observe(element);
+            });
+
+            console.log('Site fixes loaded successfully');
+
+            // Testimonials slider functionality
+            let slideIndex = 1;
+            let autoSlideInterval;
+
+            function showSlide(n) {
+                const slides = document.querySelectorAll('.testimonial-slide');
+                const dots = document.querySelectorAll('.dot');
+                
+                if (n > slides.length) { slideIndex = 1 }
+                if (n < 1) { slideIndex = slides.length }
+                
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                
+                dots.forEach(dot => {
+                    dot.classList.remove('active');
+                });
+                
+                if (slides[slideIndex - 1]) {
+                    slides[slideIndex - 1].classList.add('active');
+                }
+                if (dots[slideIndex - 1]) {
+                    dots[slideIndex - 1].classList.add('active');
+                }
+            }
+
+            function moveSlide(n) {
+                showSlide(slideIndex += n);
+            }
+
+            function currentSlide(n) {
+                showSlide(slideIndex = n);
+            }
+
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(() => {
+                    moveSlide(1);
+                }, 5000);
+            }
+
+            function stopAutoSlide() {
+                clearInterval(autoSlideInterval);
+            }
+
+            // Initialize slider
+            document.addEventListener('DOMContentLoaded', function() {
+                showSlide(slideIndex);
+                startAutoSlide();
+
+                // Pause auto-slide on hover
+                const sliderContainer = document.querySelector('.testimonials-slider');
+                if (sliderContainer) {
+                    sliderContainer.addEventListener('mouseenter', stopAutoSlide);
+                    sliderContainer.addEventListener('mouseleave', startAutoSlide);
+                }
+            });
+        </script>
+</body>
+</html>

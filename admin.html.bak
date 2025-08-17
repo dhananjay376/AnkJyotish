@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnkJyōtish - Admin Portal</title>
+    <style>
+        :root {
+            --dark-green: #1C2529;
+            --mint-green: #A1D1B1;
+            --light-mint: #E8F5E9;
+            --gold: #D4AF37;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-green);
+            color: var(--light-mint);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Content Button Styles */
+        .content-button-container {
+            text-align: center;
+            margin-top: 20vh;
+        }
+
+        .content-btn {
+            background: linear-gradient(135deg, var(--mint-green), var(--gold));
+            color: var(--dark-green);
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(161, 209, 177, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(161, 209, 177, 0.4);
+            background: linear-gradient(135deg, var(--gold), var(--mint-green));
+        }
+
+        /* Password Modal Styles */
+        .password-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+    <style>
+        :root {
+            --dark-green: #1C2529;
+            --mint-green: #A1D1B1;
+            --light-mint: #E8F5E9;
+            --gold: #D4AF37;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-green);
+            color: var(--light-mint);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .password-section {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 20vh;
+        }
+
+        h1 {
+            color: var(--mint-green);
+            margin-bottom: 2rem;
+        }
+
+        .password-container {
+            background-color: rgba(161, 209, 177, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 2px solid var(--mint-green);
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--mint-green);
+            color: var(--dark-green);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--light-mint);
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        #hiddenContent {
+            display: none;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="password-section" id="passwordSection">
+        <h1>Admin Access</h1>
+        <div class="password-container">
+            <input type="password" id="passwordInput" placeholder="Enter password">
+            <button onclick="checkPassword()">Access Admin Panel</button>
+            <p id="errorMessage" class="error-message">Incorrect password. Please try again.</p>
+        </div>
+    </div>
+
+    <div id="hiddenContent">
+        <header>
+            <div class="logo-container">
+                <img src="Ankjyotish logo.jpg" alt="AnkJyōtish Logo">
+                <div class="logo-text">AnkJyōtish Admin Portal</div>
+            </div>
+        </header>
+
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1>Admin Dashboard</h1>
+                <p>Manage your courses, students, and content</p>
+            </div>
+
+            <div class="admin-panel">
+                <div class="admin-card">
+                    <h3>Analytics</h3>
+                    <p>View course performance and student engagement metrics</p>
+                    <button onclick="showAnalytics()">View Analytics</button>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Students</h3>
+                    <p>Manage student enrollments and progress</p>
+                    <button onclick="showStudents()">Manage Students</button>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Payments</h3>
+                    <p>Track and manage course payments</p>
+                    <button onclick="showPayments()">View Payments</button>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Email Campaigns</h3>
+                    <p>Create and manage email campaigns</p>
+                    <button onclick="showEmails()">Manage Emails</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CORRECT_PASSWORD = "dhanu123";
+        const passwordInput = document.getElementById('passwordInput');
+        const errorMessage = document.getElementById('errorMessage');
+        const hiddenContent = document.getElementById('hiddenContent');
+        const passwordSection = document.getElementById('passwordSection');
+
+        function checkPassword() {
+            if (passwordInput.value === CORRECT_PASSWORD) {
+                passwordSection.style.display = 'none';
+                hiddenContent.style.display = 'block';
+                errorMessage.style.display = 'none';
+            } else {
+                errorMessage.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        // Allow Enter key to submit password
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Admin functions
+        function showAnalytics() {
+            alert('Analytics feature coming soon!');
+        }
+
+        function showStudents() {
+            alert('Student management feature coming soon!');
+        }
+
+        function showPayments() {
+            alert('Payment management feature coming soon!');
+        }
+
+        function showEmails() {
+            alert('Email campaigns feature coming soon!');
+        }
+    </script>
+</body>
+</html>
+    <style>
+        :root {
+            --dark-green: #1C2529;
+            --mint-green: #A1D1B1;
+            --light-mint: #E8F5E9;
+            --gold: #D4AF37;
+            --transition: all 0.3s ease;
+        }
+
+        /* Password Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: var(--dark-green);
+            margin: 15% auto;
+            padding: 2rem;
+            border: 2px solid var(--mint-green);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .modal h2 {
+            color: var(--mint-green);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 2px solid var(--mint-green);
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+
+        .modal button {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--mint-green);
+            color: var(--dark-green);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal button:hover {
+            background-color: var(--light-mint);
+        }
+
+        .password-error {
+            color: #ff6b6b;
+            text-align: center;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-green);
+            color: var(--light-mint);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: rgba(28, 37, 41, 0.9);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo-container img {
+            height: 50px;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--mint-green);
+            letter-spacing: 2px;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 2rem;
+        }
+        
+        .admin-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .admin-header h1 {
+            font-size: 2.5rem;
+            color: var(--mint-green);
+            margin-bottom: 1rem;
+        }
+        
+        .admin-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .admin-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .admin-card {
+            background-color: rgba(161, 209, 177, 0.1);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .admin-card h3 {
+            font-size: 1.5rem;
+            color: var(--mint-green);
+            margin-bottom: 1rem;
+        }
+        
+        .admin-card p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .admin-btn {
+            display: inline-block;
+            background-color: var(--mint-green);
+            color: var(--dark-green);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        
+        .admin-btn:hover {
+            background-color: transparent;
+            color: var(--mint-green);
+            border-color: var(--mint-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Modal -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <h2>Admin Access</h2>
+            <p style="text-align: center; margin-bottom: 1rem;">Please enter the admin password to continue.</p>
+            <input type="password" id="passwordInput" placeholder="Enter password">
+            <p id="passwordError" class="password-error">Incorrect password. Please try again.</p>
+            <button onclick="checkPassword()">Submit</button>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden by Default) -->
+    <div id="hiddenContent" style="display: none;">
+        <header>
+            <div class="logo-container">
+                <img src="Ankjyotish logo.jpg" alt="AnkJyōtish Logo" />
+                <div class="logo-text">AnkJyōtish Admin Portal</div>
+            </div>
+        </header>
+
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1>Admin Dashboard</h1>
+                <p>Manage your courses, students, and content</p>
+            </div>
+
+            <div class="admin-panel">
+                <div class="admin-card">
+                    <h3>Analytics</h3>
+                    <p>View course performance and student engagement metrics</p>
+                    <button class="admin-btn" onclick="showAnalytics()">View Analytics</button>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Students</h3>
+                    <p>Manage student enrollments and progress</p>
+                    <button class="admin-btn" onclick="showStudents()">Manage Students</button>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Payments</h3>
+                    <p>Track and manage course payments</p>
+                    <button class="admin-btn" onclick="showPayments()">View Payments</button>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Email Campaigns</h3>
+                    <p>Create and manage email campaigns</p>
+                    <button class="admin-btn" onclick="showEmails()">Manage Emails</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password functionality
+        const CORRECT_PASSWORD = "dhanu123";
+
+        function openPasswordModal() {
+            document.getElementById('passwordModal').style.display = 'block';
+            document.getElementById('passwordInput').focus();
+            document.getElementById('passwordError').style.display = 'none';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordError').style.display = 'none';
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            if (input === CORRECT_PASSWORD) {
+                closePasswordModal();
+                showContent();
+            } else {
+                document.getElementById('passwordError').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        function showContent() {
+            document.getElementById('hiddenContent').style.display = 'block';
+            document.getElementById('passwordModal').style.display = 'none';
+        }
+
+        // Admin functions
+        function showAnalytics() {
+            alert('Analytics feature coming soon!');
+        }
+
+        function showStudents() {
+            alert('Student management feature coming soon!');
+        }
+
+        function showPayments() {
+            alert('Payment management feature coming soon!');
+        }
+
+        function showEmails() {
+            alert('Email campaigns feature coming soon!');
+        }
+
+        // Allow Enter key to submit password
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('passwordModal');
+            if (event.target === modal) {
+                closePasswordModal();
+            }
+        }
+
+        // Show password modal when the page loads
+        openPasswordModal();
+    </script>
+</body>
+</html>
